@@ -89,3 +89,31 @@ class List:
         
         self._lst = _new_lst.copy()
         return self
+    
+    def find(self, test_fn: Callable[[T], R]) -> Union[int, str]:
+        if not callable(test_fn):
+            raise ValueError("test_fn must be a callable function")
+
+        for item in self._lst:
+            if test_fn(item):
+                return item
+    
+    def some(self, test_fn: Callable[[T], bool]) -> bool:
+        if not callable(test_fn):
+            raise ValueError("test_fn must be a callable function")
+        
+        for item in self._lst:
+            if test_fn(item):
+                return True
+        
+        return False
+
+    def every(self, test_fn: Callable[[T], bool]) -> bool:
+        if not callable(test_fn):
+            raise ValueError("test_fn must be a callable function")
+
+        for item in self._lst:
+            if not test_fn(item):
+                return False
+        
+        return True
